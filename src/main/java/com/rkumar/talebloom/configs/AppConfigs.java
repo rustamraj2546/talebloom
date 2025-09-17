@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AppConfigs {
-    // applications configs...
+    // application configurations...
 }
