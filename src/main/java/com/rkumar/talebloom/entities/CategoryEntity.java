@@ -1,35 +1,29 @@
 package com.rkumar.talebloom.entities;
 
-import com.rkumar.talebloom.entities.type.Roles;
+
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "CATEGORY")
 @Data
-public class UserEntity {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
+    @Column(unique = true)
+    private String name;
 
     @Column(unique = true)
-    private String email;
+    private String slug;
 
-    private String password;
-
-    private String gender;
-    private Integer age;
-
-    private String bio;
+    private String description;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-
-    @Enumerated(EnumType.STRING)
-    private Roles role;
+    private LocalDateTime updatedAt;
 }
