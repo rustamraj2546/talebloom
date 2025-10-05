@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "TAG")
@@ -15,10 +17,11 @@ public class TagEntity {
     private Long id;
 
     @Column(unique = true)
-    private String name;
+    private String tagName;
 
-    @Column(unique = true)
-    private String slug;
+
+    @ManyToMany(mappedBy = "tags")
+    private Set<StoryEntity> stories = new HashSet<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

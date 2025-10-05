@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
@@ -32,4 +34,24 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private Roles role;
+
+    // inverse side BUT Parent entity
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<StoryEntity> stories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<LikeEntity> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "bookmarkedByUserId")
+    private List<BookmarkEntity> bookMarks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "reporterUserId")
+    private List<ReportEntity> reports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userId")
+    private List<ViewHistoryEntity> viewHistories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userId")
+    private List<CommentEntity> comments = new ArrayList<>();
+
 }

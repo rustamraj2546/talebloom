@@ -6,6 +6,8 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "CATEGORY")
@@ -16,12 +18,12 @@ public class CategoryEntity {
     private Long id;
 
     @Column(unique = true)
-    private String name;
-
-    @Column(unique = true)
-    private String slug;
+    private String categoryName;
 
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<StoryEntity> stories = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -16,9 +16,12 @@ public class LikeEntity {
 
 //    enum targetType;
 
-    private Long userId;    // FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    private UserEntity user;    // FK
 
-    private Long storyId;   // FK
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    private StoryEntity storyId;   // FK
 
 //    private Long commentId;   // FK
 

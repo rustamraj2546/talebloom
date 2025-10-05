@@ -14,9 +14,13 @@ public class BookmarkEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity bookmarkedByUserId;
 
-    private Long storyId;
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    private StoryEntity bookmarkedStoryId;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

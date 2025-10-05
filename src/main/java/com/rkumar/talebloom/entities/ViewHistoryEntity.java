@@ -13,8 +13,13 @@ public class ViewHistoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
-    private Long storyId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userId;
+
+    @ManyToOne
+    @JoinColumn(name = "story_id")
+    private StoryEntity storyId;
 
 //    private String ipAddress;
 
