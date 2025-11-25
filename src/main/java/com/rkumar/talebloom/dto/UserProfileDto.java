@@ -1,19 +1,20 @@
 package com.rkumar.talebloom.dto;
 
 import com.rkumar.talebloom.entities.type.RoleType;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class UserDto {
+@RequiredArgsConstructor
+public class UserProfileDto {
     private Long id;
     private String fullName;
     private String email;
-    private String password;
     private String gender;
     private Integer age;
     private String bio;
+    private String profilePic;
     private RoleType role;
 }

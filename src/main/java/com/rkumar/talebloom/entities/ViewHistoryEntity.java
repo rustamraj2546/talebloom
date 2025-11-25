@@ -15,11 +15,11 @@ public class ViewHistoryEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userId;
+    private UserEntity user;
 
     @ManyToOne
     @JoinColumn(name = "story_id")
-    private StoryEntity storyId;
+    private StoryEntity story;
 
 //    private String ipAddress;
 

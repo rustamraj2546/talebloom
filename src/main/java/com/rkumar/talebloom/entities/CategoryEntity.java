@@ -2,7 +2,9 @@ package com.rkumar.talebloom.entities;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,7 +13,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "CATEGORY")
-@Data
+@Getter
+@Setter
+@ToString(exclude = "stories")
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +24,7 @@ public class CategoryEntity {
     @Column(unique = true)
     private String categoryName;
 
-    private String description;
-
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<StoryEntity> stories = new ArrayList<>();
 
     @CreationTimestamp

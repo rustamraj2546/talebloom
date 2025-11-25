@@ -33,17 +33,17 @@ public class ReportEntity {
     // FK
     @ManyToOne
     @JoinColumn(name = "reporter_user_id")
-    private UserEntity reporterUserId;
+    private UserEntity reporterUser;
 
-    private Long reportedUserId;
+    private Long reportedUser;
 
     @ManyToOne
     @JoinColumn(name = "story_id")
-    private StoryEntity reportedStoryId;
+    private StoryEntity reportedStory;
 
     @ManyToOne
     @JoinColumn(name = "reported_comment_id")
-    private CommentEntity reportedCommentId;
+    private CommentEntity reportedComment;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

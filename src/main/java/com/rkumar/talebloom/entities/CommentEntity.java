@@ -16,22 +16,29 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String comment;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    /*
+    * storyId on which user commented
+    * */
     @ManyToOne
-    @JoinColumn(name = "story_id")
-    private StoryEntity storyId;   // FK
+    @JoinColumn(name = "story_id", nullable = false)
+    private StoryEntity story;   // FK
 
+    /*
+    * user who commented on story
+    * */
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userId;    // FK
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;    // FK
 
-//    private Long parentId;     // FK
+//    private Long parent;     // FK
 
-    @OneToMany(mappedBy = "reportedCommentId", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reportedComment", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReportEntity> reportedComments = new ArrayList<>();
 }
