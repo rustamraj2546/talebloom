@@ -4,9 +4,9 @@ import com.rkumar.talebloom.dto.BioDto;
 import com.rkumar.talebloom.dto.ProfilePicDto;
 import com.rkumar.talebloom.dto.StoryResDto;
 import com.rkumar.talebloom.dto.UserProfileDto;
-import com.rkumar.talebloom.entities.StoryEntity;
 import com.rkumar.talebloom.exceptions.ResourceNotFoundException;
 import com.rkumar.talebloom.services.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping(path = "/{userId}")
     ResponseEntity<UserProfileDto> getUserById(@PathVariable Long userId) {
-        UserProfileDto userProfileDto = userService.getUserById(userId);
+        UserProfileDto userProfileDto = userService.getUserProfileById(userId);
         return ResponseEntity.ok(userProfileDto);
     }
 
@@ -30,7 +30,7 @@ public class UserController {
     * Update profile Bio
     * */
     @PutMapping(path = "/bio")
-    ResponseEntity<UserProfileDto> updateProfileBio(@RequestBody BioDto bioDto) {
+    ResponseEntity<UserProfileDto> updateProfileBio(@Valid @RequestBody BioDto bioDto) {
         UserProfileDto userProfileDto = userService.updateProfileBio(bioDto.getBio(), bioDto.getUserId());
         return ResponseEntity.ok(userProfileDto);
     }

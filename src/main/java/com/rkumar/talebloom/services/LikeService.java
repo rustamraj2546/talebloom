@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class LikeService {
@@ -18,8 +20,10 @@ public class LikeService {
     private final UserRepository userRepository;
     private final StoryRepository storyRepository;
 
-    boolean isAlreadyLiked(StoryEntity story, UserEntity user) {
-        return likeRepository.existsByStoryAndUser(story, user);
+    LikeEntity isAlreadyLiked(StoryEntity story, UserEntity user) {
+        Optional<LikeEntity> likeEntity = likeRepository.findByStoryAndUser(story, user);
+        return likeEntity.orElse(null);
+
     }
 
     /*
@@ -35,8 +39,8 @@ public class LikeService {
                 () -> new ResourceNotFoundException("Story not found with id: " + storyId)
         );
 
-        if (isAlreadyLiked(storyEntity, userEntity)) {
-            return true;
+        if (likeRepository.existsByStoryAndUser(storyEntity, userEntity)) {
+            return true;    // already liked
         }
 
         LikeEntity likeEntity = LikeEntity.builder()
@@ -45,12 +49,29 @@ public class LikeService {
                 .build();
 
         LikeEntity likedEntity = likeRepository.save(likeEntity);
-//        storyEntity.setLikes();   // bidirectinal consistency mentenance
+//        storyEntity.setLikes();   // bidirectional consistency maintenance
 //        userEntity.setLikes();
         return true;
     }
 
+    /*
+     * unlike the liked story
+     * */
     public boolean unlikeStoryById(Long storyId, Long userId) {
-        throw new IllegalStateException("Method not implemented");
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with id: " + userId)
+        );
+
+        StoryEntity storyEntity = storyRepository.findById(storyId).orElseThrow(
+                () -> new ResourceNotFoundException("Story not found with id: " + storyId)
+        );
+
+        LikeEntity likeEntity = isAlreadyLiked(storyEntity, userEntity);
+        if (likeEntity != null) {
+            likeRepository.deleteById(likeEntity.getId());
+            return true;
+        }
+
+        return false;
     }
 }

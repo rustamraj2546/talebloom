@@ -1,6 +1,5 @@
 package com.rkumar.talebloom.services;
 
-
 import com.rkumar.talebloom.dto.StoryResDto;
 import com.rkumar.talebloom.dto.UserProfileDto;
 import com.rkumar.talebloom.entities.BookmarkEntity;
@@ -13,16 +12,18 @@ import com.rkumar.talebloom.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
@@ -35,9 +36,12 @@ public class UserService {
         );
     }
 
-    public UserProfileDto getUserById(Long userId) {
-        UserEntity userEntity = isExistUserById(userId);
+    public UserEntity getUserById(Long userId) {
+        return isExistUserById(userId);
+    }
 
+    public UserProfileDto getUserProfileById(Long userId) {
+        UserEntity userEntity = getUserById(userId);
         return modelMapper.map(userEntity, UserProfileDto.class);
     }
 
@@ -126,4 +130,13 @@ public class UserService {
 
         return deletedCount > 0;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username).orElseThrow(
+                () -> new ResourceNotFoundException("User not found with email: " + username)
+        );
+    }
+
+
 }

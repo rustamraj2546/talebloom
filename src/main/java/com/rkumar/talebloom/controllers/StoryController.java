@@ -2,6 +2,7 @@ package com.rkumar.talebloom.controllers;
 
 import com.rkumar.talebloom.dto.StoryCreatedResDto;
 import com.rkumar.talebloom.dto.StoryResDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,6 @@ import com.rkumar.talebloom.services.StoryService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(path = "/api/story")
@@ -24,7 +24,7 @@ public class StoryController {
     *  Author a new Story
     * */
     @PostMapping(path = "/create/{authorId}")
-    ResponseEntity<StoryCreatedResDto> createStory(@RequestBody StoryDto storyDto, @PathVariable Long authorId) {
+    ResponseEntity<StoryCreatedResDto> createStory(@Valid @RequestBody StoryDto storyDto, @PathVariable Long authorId) {
         StoryCreatedResDto savedStory = storyService.createStory(storyDto, authorId);
         return new ResponseEntity<>(savedStory, HttpStatus.CREATED);
     }
@@ -60,21 +60,4 @@ public class StoryController {
         List<StoryResDto> stories = storyService.getStoryByCategory(category);
         return new ResponseEntity<>(stories, HttpStatus.OK);
     }
-
-    ResponseEntity<List<StoryResDto>> getStoriesByAuthor() {
-        return null;
-    }
-
-    ResponseEntity<List<StoryResDto>> getStoriesByLanguage() {
-        return null;
-    }
-
-    ResponseEntity<List<StoryResDto>> getStoriesByLanguageAndTags() {
-        return null;
-    }
-
-    ResponseEntity<List<StoryResDto>> getStoriesByLanguageOrTagsOrCategory() {
-        return null;
-    }
-
 }

@@ -1,11 +1,13 @@
 package com.rkumar.talebloom.advices;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@Builder
 public class ApiResponse<T> {
     private LocalDateTime timeStamp;
     private T data;
@@ -14,7 +16,6 @@ public class ApiResponse<T> {
     public ApiResponse () {
         this.timeStamp = LocalDateTime.now();
     }
-
 
     public ApiResponse (T data) {
         this();
@@ -25,6 +26,5 @@ public class ApiResponse<T> {
         this();
         this.error = error;
     }
-
 
 }

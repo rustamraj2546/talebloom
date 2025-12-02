@@ -1,5 +1,6 @@
 package com.rkumar.talebloom.controllers;
 
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping(path = "/create/{userId}")
-    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto comment, @PathVariable Long userId, @PathParam("storyId") Long storyId) {
+    public ResponseEntity<CommentDto> createComment(@Valid @RequestBody CommentDto comment, @PathVariable Long userId, @PathParam("storyId") Long storyId) {
         CommentDto savedComment = commentService.createComment(comment, userId, storyId);
 
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
@@ -35,7 +36,7 @@ public class CommentController {
     }
 
     @PutMapping(path = "/update/{commentId}")
-    public ResponseEntity<CommentDto> updateCommentById(@RequestBody CommentDto inputData, @PathVariable Long commentId, @PathParam("userId") Long userId) {
+    public ResponseEntity<CommentDto> updateCommentById(@Valid @RequestBody CommentDto inputData, @PathVariable Long commentId, @PathParam("userId") Long userId) {
         CommentDto updatedComment = commentService.updateCommentById(inputData, commentId, userId);
         return ResponseEntity.ok(updatedComment);
     }

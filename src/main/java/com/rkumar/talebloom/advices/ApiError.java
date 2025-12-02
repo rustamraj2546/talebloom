@@ -1,12 +1,13 @@
 package com.rkumar.talebloom.advices;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @Builder
 public class ApiError {
     private String message;
@@ -17,7 +18,7 @@ public class ApiError {
         this.localDateTime = LocalDateTime.now();
     }
 
-    public ApiError(String message, HttpStatus status, LocalDateTime localDateTime) {
+    public ApiError(String message, HttpStatus status) {
         this();
         this.message = message;
         this.status = status;

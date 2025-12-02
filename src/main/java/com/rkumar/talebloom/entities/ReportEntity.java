@@ -3,6 +3,7 @@ package com.rkumar.talebloom.entities;
 import com.rkumar.talebloom.entities.type.ReportStatus;
 import com.rkumar.talebloom.entities.type.TargetTypes;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "REPORT")
 @Data
+@Builder
 public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,6 @@ public class ReportEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
-    private LocalDateTime resolvedAt;
 
+    private LocalDateTime resolvedAt;
 }

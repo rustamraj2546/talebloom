@@ -6,7 +6,10 @@ import com.rkumar.talebloom.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     boolean existsByStoryAndUser(StoryEntity story, UserEntity user);
+    Optional<LikeEntity> findByStoryAndUser(StoryEntity story, UserEntity user);
 }
